@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { connectTelemetry } from "./utils/telemetrySocket";
 import OrbitVisualizer from "./components/OrbitVisualizer";
 import OrbitInjectionSidebar from "./components/OrbitInjectionSidebar";
-import TelemetryPanel from "./components/TelemetryPanel";
 import Popup from "./components/Popup";
+import TelemetryPanel from "./components/TelemetryPanel";
 
 function App() {
   const [telemetry, setTelemetry] = useState(null);
@@ -16,12 +16,16 @@ function App() {
   }, []);
 
   const handleInjection = () => {
+    console.log("Injection initiated with:", injectionParams);
     setSatelliteState({
       radius: (injectionParams.apogee + injectionParams.perigee) / 2,
       inclination: injectionParams.inclination,
+      eccentricity: injectionParams.eccentricity ?? 0,
       speed: 0,
+      fuelLeft: 100,
       position: { x: 0, y: 0, z: 0 },
-      timestamp: Date.now(),
+      targetAltitude: ((injectionParams.apogee + injectionParams.perigee) / 2) * 6371,
+      targetInclination: injectionParams.inclination ?? 0,
     });
   };
 

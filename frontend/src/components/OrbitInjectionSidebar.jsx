@@ -98,6 +98,17 @@ export default function OrbitInjectionSidebar({
         style={inputStyle}
       />
 
+      <label style={labelStyle}>Eccentricity</label>
+      <input
+        type="number"
+        step="0.001"
+        value={injectionParams.eccentricity ?? ""}
+        onChange={(e) =>
+          setInjectionParams({ ...injectionParams, eccentricity: parseFloat(e.target.value) })
+        }
+        style={inputStyle}
+      />
+
       <label style={labelStyle}>Burn Duration (sec)</label>
       <input
         type="number"

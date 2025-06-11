@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function TelemetryPanel({ satelliteState }) {
   const boxStyle = {
     background: "#111",
@@ -20,27 +18,26 @@ export default function TelemetryPanel({ satelliteState }) {
     radius,
     speed,
     inclination,
-    eccentricity = 0,
-    targetAltitude = 0,
-    targetInclination = 0,
-    fuelLeft = 100,
-    position = { x: 0, y: 0, z: 0 }
+    eccentricity,
+    targetAltitude,
+    targetInclination,
+    fuelLeft,
+    position
   } = satelliteState;
 
   return (
     <div style={boxStyle}>
       <h3 style={{ marginBottom: "0.8rem", fontSize: "1.2rem" }}>📊 Orbit Injection Telemetry</h3>
       <p><strong>Phase:</strong> Orbit Injection</p>
-      <p><strong>Time:</strong> {new Date().toLocaleTimeString()}</p>
+      <p><strong>Time:</strong> {new Date().toISOString()}</p>
       <p><strong>Altitude:</strong> {(radius * 6371).toFixed(2)} km</p>
       <p><strong>Velocity:</strong> {speed.toFixed(3)} km/s</p>
-      <p><strong>Temperature:</strong> -20.0 °C</p>
+      <p><strong>Temperature:</strong> {(-20 + speed * 100).toFixed(1)} °C</p>
       <p><strong>Fuel Left:</strong> {fuelLeft.toFixed(1)}%</p>
       <p><strong>Target Altitude:</strong> {targetAltitude.toFixed(2)} km</p>
       <p><strong>Target Inclination:</strong> {targetInclination.toFixed(1)}°</p>
       <p><strong>Status:</strong> {fuelLeft <= 0 ? "Burn Complete" : "Burning..."}</p>
 
-      {/* Live Satellite Panel Below */}
       <div style={{
         marginTop: "1rem",
         fontSize: "0.9rem",
@@ -53,7 +50,7 @@ export default function TelemetryPanel({ satelliteState }) {
         <p><strong>Radius:</strong> {radius.toFixed(2)}</p>
         <p><strong>Speed:</strong> {speed.toFixed(3)}</p>
         <p><strong>Inclination:</strong> {inclination.toFixed(1)}°</p>
-        <p><strong>Eccentricity:</strong> {eccentricity.toFixed(3)}</p>
+        <p><strong>Eccentricity:</strong> {eccentricity?.toFixed(3) ?? "0.000"}</p>
         <p><strong>Position:</strong></p>
         <ul style={{ marginTop: 0, paddingLeft: "1.2rem" }}>
           <li>X: {position.x.toFixed(2)}</li>
